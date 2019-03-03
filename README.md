@@ -1,19 +1,19 @@
 # yourmdApp!
 
-This file is supposed to be a brief description of the project architectural's choices, code commenting and a bit short description of unit tests.
+This file is a brief description of the project architectural's choices, as well as comments regarding the code, and a short description of unit tests.
 
-The main goal of the app is to let the user able to search for a venue by typing in the search field a name.
+The main goal of the app is to let the user be able to search for a venue by typing in the search field a name.
 
 
 # Architecture
 
-The design pattern chosen to develop the app is the *MVVM (Model View ViewModel)*: it allows  to save and restore the internal lifecycle of the Activity without any *boilerplate* code using the **ViewModel** class from the Android support package. The main difference with the MVP architecture is that there isn't any *Contract* interface between the View (*Activity*) and the Controller (*ViewModel*): every-time the data is updated in the ViewModel class, the Activity is notified through **Observers**. In the ViewModel class there are three observers relatives to the three main status of the activity:
+The design pattern chosen to develop the app is the *MVVM (Model View ViewModel)*: it allows you to save and restore the internal lifecycle of the Activity without any *boilerplate* code using the **ViewModel** class from the Android support package. The main difference with the MVP architecture is that there isn't any *Contract* interface between the View (*Activity*) and the Controller (*ViewModel*): every-time the data is updated in the ViewModel class, the Activity is notified through **Observers**. In the ViewModel class there are three observers relatives to the three main views of the activity:
 
- - Venues List: the main observer containing the data of the API response, every time the user try to query the FourSquare Server.
- - Error String: it's responsible to show the user whenever an error occurred, using a TextView field in the activity UI.
- - ProgressBar: It appears whenever there's a network request to show the user that the UI is waiting for a response from the backend side.
+ - **Venues List Observer**: Whenever the API call is invoked the *Mutable* list is updated with the new values received from the FourSquare server; the Activity is subscribed to this observer in order to reload the items in the adapter object and update the UI accordingly.
+ - **Error String Observer**: It is responsible for showing the user whenever an error occurs, using a TextView field in the activity UI.
+ - **ProgressBar View Observer**: It appears whenever there's a network request to show the user that the UI is waiting for a response from the backend side.
 
-All the three values are updated during the API call, according to the current status of the call itself. Simply by calling the `.postValue` method of the Observer object the Activity is aware of how to handle the UI without even knowing about the API call. Also, the ViewModel class is scoped to the activity's lifecycle passed to the *ViewModelProvider* when getting the ViewModel: it means that even if the Activity changes the current lifecycle's status the ViewModel will never be instantiated again, it will be destroyed when the Activity is *finished*. This results in a perfect scenario for when the user rotates the device: the activity is destroyed and recreated again to match the orientation of the device but the ViewModel will survive to this and there's no need to recall the Repository every time the activity is recreated.
+All the three values are updated during the API call, according to the current status of the call itself. Simply by calling the `.postValue` method of the Observer object the Activity is aware of how to handle the UI without even knowing about the API call. The ViewModel class is scoped to the activity's lifecycle passed to the *ViewModelProvider* when getting the ViewModel: it means that even if the Activity changes the current lifecycle's status the ViewModel will never be instantiated again, it will be destroyed when the Activity is *finished*. This results in a perfect scenario for when the user rotates the device: the activity is destroyed and re-created again to match the orientation of the device but the ViewModel will survive to this and there's no need to recall the Repository every time the activity is recreated.
 
 ## Code
 
@@ -96,5 +96,5 @@ The activity also contains the `adapter` object to manage the `recyclerview`.
 ## Unit Test
 
 To be able to perform unit tests on the ViewModel class I managed to *mock* the `LifecycleOwner` object using a specific class in the *TestHelper* folder.
-Mocking the owner makes possible to test the results in the observer callback whenever the data changes. To perform the test on the retrofit call I managed to handle the asynchronous calls using a low-level synchronisation constructor: `CountDownLatch`.
-It's also present another test, a UI test to make sure the behaviour of all the UI objects is correct in some scenarios.
+Mocking the owner makes possible to test the results in the observer callback whenever the data changes. To perform the test on the Retrofit call I managed to handle the asynchronous calls using a low-level synchronisation constructor: `CountDownLatch`.
+Another test is present, this includes a UI test to make sure the behaviour of all the UI objects is correct in some scenarios.
