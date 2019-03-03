@@ -90,3 +90,11 @@ The *MainActivity* file contains the *View* of the architecture, it uses **Butte
         }
 Using `observeData()` the activity is able to initialise the ViewModel using the static method of the ViewModelProviders class and starting observing the data changing.
 The activity also contains the `adapter` object to manage the `recyclerview`.
+
+
+
+## Unit Test
+
+To be able to perform unit tests on the ViewModel class I managed to *mock* the `LifecycleOwner` object using a specific class in the *TestHelper* folder.
+Mocking the owner makes possible to test the results in the observer callback whenever the data changes. To perform the test on the retrofit call I managed to handle the asynchronous calls using a low-level synchronisation constructor: `CountDownLatch`.
+It's also present another test, a UI test to make sure the behaviour of all the UI objects is correct in some scenarios.
