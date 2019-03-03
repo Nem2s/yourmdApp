@@ -1,18 +1,14 @@
 package com.marco.yourmdapp;
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
-
 import com.marco.yourmdapp.testHelper.TestLifecycle;
 import com.marco.yourmdapp.viewmodel.MainActivityViewModel;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
 import java.util.concurrent.CountDownLatch;
-
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNull;
 
@@ -60,7 +56,4 @@ public class ViewModelTest {
         testLifecycle.resume();
         latch.await();
     }
-
-
-
 }

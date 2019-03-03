@@ -1,4 +1,4 @@
-package com.marco.yourmdapp.network;
+package com.marco.yourmdapp.repository;
 
 import com.marco.yourmdapp.model.SearchVenueResponse;
 
@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public class Repository {
+public class SearchRepository {
     private static Retrofit instance;
     private static final String URL = "https://api.foursquare.com/";
 
@@ -43,7 +43,7 @@ public class Repository {
 
     public interface myAPI {
 
-        @GET("v2/venues/search?client_id=ZBO1UNSFXVGUL54VVDAXVLFXRZQQMAWRQXD44R22S1SZN1PK&client_secret=SR2MNLMS3HW05W12W2IPYXEMB2ZCXM5P0CHPBQ5PLW55KH0J&v=20181009")
+        @GET("v2/venues/search?client_id=ZBO1UNSFXVGUL54VVDAXVLFXRZQQMAWRQXD44R22S1SZN1PK&client_secret=SR2MNLMS3HW05W12W2IPYXEMB2ZCXM5P0CHPBQ5PLW55KH0J&v=20190301")
         Call<SearchVenueResponse> searchVenue(@Query("near") String searchVenueRequest
         );
     }

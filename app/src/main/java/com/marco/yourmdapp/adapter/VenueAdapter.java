@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marco.yourmdapp.R;
-import com.marco.yourmdapp.contract.ItemRowView;
 import com.marco.yourmdapp.model.primitives.Venue;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueHolder>
         return data.size();
     }
 
-    public static class VenueHolder extends RecyclerView.ViewHolder implements ItemRowView {
+    public static class VenueHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.venue_description)
         TextView venue_desc;
@@ -60,17 +59,17 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueHolder>
             ButterKnife.bind(this, itemView);
         }
 
-        @Override
+
         public void setName(String name) {
             venue_name.setText(name);
         }
 
-        @Override
+
         public void setDescription(String description) {
             venue_desc.setText(description);
         }
 
-        @Override
+
         public void setImage(int uri) {
             Glide.with(itemView)
                     .load(uri)
