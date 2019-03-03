@@ -1,6 +1,6 @@
 # yourmdApp!
 
-This file is supposed to be a **short** description of the project architectural's choices, code commenting and a bit short description of unit tests.
+This file is supposed to be a brief description of the project architectural's choices, code commenting and a bit short description of unit tests.
 
 The main goal of the app is to let the user able to search for a venue by typing in the search field a name.
 
@@ -53,4 +53,40 @@ The ViewModel class inherits from the *abstract* class *ViewModel* and it provid
       return isLoading;  
     }
 
-It also offers the *getters* for the three Observers specifying the behaviour for each object 
+It also offers the *getters* for the three Observers specifying the behaviour for each object .
+
+    public class MainActivity extends AppCompatActivity {  
+      
+      @BindView(R.id.recycler_view)  
+      RecyclerView recyclerView;  
+      @BindView(R.id.til_search)  
+      TextInputLayout searchLayout;  
+      @BindView(R.id.tiet_search)  
+      TextInputEditText et_search;  
+      @BindView(R.id.btn_search)  
+      MaterialButton searchButton;  
+      @BindView(R.id.loading)  
+      ProgressBar loading;  
+      @BindView(R.id.error_message)  
+      TextView errorTv;
+      ...
+
+The *MainActivity* file contains the *View* of the architecture, it uses **Butterknife** for the *DataBinding* process.
+
+        void observeData() {  
+          model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+          model.OnVenuesChanged().observe(this, venues -> { 
+          ...
+          ...
+          }
+          model.OnErrorOccured().observe(this, error -> {
+          ...
+          ...
+          }
+          model.OnLoadingStatus().observe(this, isLoading -> {
+          ...
+          ...
+          }
+        }
+Using `observeData()` the activity is able to initialise the ViewModel using the static method of the ViewModelProviders class and starting observing the data changing.
+The activity also contains the `adapter` object to manage the `recyclerview`.
